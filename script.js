@@ -3,27 +3,27 @@ const convertBtn = document.getElementById('convert-btn');
 const statusElement = document.getElementById('status');
 let dbFile = null;
 
-// Habilita o botão de conversão quando um arquivo é selecionado
+// Enable the convert button when a file is selected
 uploadElement.addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
         dbFile = e.target.files[0];
         convertBtn.disabled = false;
-        statusElement.textContent = `Arquivo selecionado: ${dbFile.name}`;
+        statusElement.textContent = `Selected file: ${dbFile.name}`;
     } else {
         dbFile = null;
         convertBtn.disabled = true;
-        statusElement.textContent = 'Por favor, selecione um arquivo .dlens';
+        statusElement.textContent = 'Please select a .dlens file';
     }
 });
 
 // Ação principal ao clicar no botão
 convertBtn.addEventListener('click', async () => {
     if (!dbFile) {
-        alert("Nenhum arquivo selecionado!");
+        alert("No file selected!");
         return;
     }
 
-    statusElement.textContent = 'Inicializando o banco de dados...';
+    statusElement.textContent = 'Initializing database...';
 
     try {
         // Configura o sql.js para encontrar o arquivo .wasm
@@ -33,7 +33,7 @@ convertBtn.addEventListener('click', async () => {
 
         const reader = new FileReader();
         reader.onload = function() {
-            statusElement.textContent = 'Lendo o arquivo e executando a query...';
+            statusElement.textContent = 'Reading file and running query...';
             const Uints = new Uint8Array(reader.result);
             
             // Carrega o banco de dados
@@ -56,35 +56,35 @@ convertBtn.addEventListener('click', async () => {
             const results = db.exec(sqlQuery);
 
             if (results.length === 0) {
-                statusElement.textContent = 'A query não retornou resultados.';
+                statusElement.textContent = 'The query returned no results.';
                 return;
             }
             
-            statusElement.textContent = 'Convertendo para CSV...';
-            // Converte os resultados para o formato CSV
+            statusElement.textContent = 'Converting to CSV...';
+            // Convert the results to CSV format
             const csvContent = convertToCSV(results[0]);
 
-            statusElement.textContent = 'Criando arquivo para download...';
-            // Inicia o download do arquivo CSV
+            statusElement.textContent = 'Creating file for download...';
+            // Start the CSV file download
             downloadCSV(csvContent, 'query_result.csv');
 
-            statusElement.textContent = 'Conversão concluída! O download deve ter iniciado.';
+            statusElement.textContent = 'Conversion complete! Download should have started.';
         }
         reader.onerror = function() {
-            statusElement.textContent = 'Erro ao ler o arquivo.';
-            console.error("Erro de FileReader:", reader.error);
+            statusElement.textContent = 'Error reading file.';
+            console.error("FileReader error:", reader.error);
         };
         reader.readAsArrayBuffer(dbFile);
 
     } catch (err) {
-        statusElement.textContent = 'Ocorreu um erro.';
+        statusElement.textContent = 'An error occurred.';
         console.error(err);
-        alert("Ocorreu um erro ao processar o arquivo. Verifique se é um banco de dados SQLite válido.");
+        alert("An error occurred while processing the file. Please ensure it's a valid SQLite database.");
     }
 });
 
 /**
- * Converte um objeto de resultado do sql.js para uma string CSV.
+ * Convert an sql.js result object to a CSV string.
  */
 function convertToCSV(data) {
     const columns = data.columns;
@@ -93,7 +93,7 @@ function convertToCSV(data) {
 
     rows.forEach(row => {
         const processedRow = row.map(item => {
-            // Trata valores que podem conter vírgulas ou aspas
+            // Handle values that may contain commas or quotes
             let cell = item === null ? '' : String(item);
             if (cell.includes(',')) {
                 cell = `"${cell.replace(/"/g, '""')}"`;
@@ -107,7 +107,7 @@ function convertToCSV(data) {
 }
 
 /**
- * Cria um link de download e o clica programaticamente.
+ * Create a download link and click it programmatically.
  */
 function downloadCSV(csvContent, fileName) {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -120,3 +120,43 @@ function downloadCSV(csvContent, fileName) {
     link.click();
     document.body.removeChild(link);
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    // --- FILE CONVERTER LOGIC (PLACE YOURS HERE) ---
+    // Example:
+    const uploadElement = document.getElementById('db-upload');
+    const convertBtn = document.getElementById('convert-btn');
+    // ... rest of your conversion logic
+
+    uploadElement.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            convertBtn.disabled = false;
+        } else {
+            convertBtn.disabled = true;
+        }
+    });
+
+    // --- DONATION POPUP LOGIC ---
+
+    const donationPopup = document.getElementById('donation-popup');
+    const closePopupButton = document.getElementById('close-popup-btn');
+
+    // Function to show the popup
+    const showPopup = () => {
+        donationPopup.classList.remove('popup-hidden');
+        donationPopup.classList.add('popup-visible');
+    };
+
+    // Function to hide the popup
+    const hidePopup = () => {
+        donationPopup.classList.remove('popup-visible');
+        donationPopup.classList.add('popup-hidden');
+    };
+
+    // Show the popup after 3 seconds
+    setTimeout(showPopup, 3000);
+
+    // Add click event to close the popup
+    closePopupButton.addEventListener('click', hidePopup);
+});

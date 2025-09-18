@@ -1,33 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://openmoji.org/data/color/svg/1FAB2.svg" type="image/x-icon">
-    <title>Conversor .dlens para .csv</title>
+    <title>.dlens to .csv Converter</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="author" content="od3zza" />
-    <meta name="description"
-        content="." />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Theme Color - https://goo.gl/qRE0vM -->
-    <meta name="theme-color" content="#ffffff" />
 </head>
-    <!--
-          )      (\_
-         ((    _/{  "-;
-          )).-' {{ ;'`
-HEY U!   ( (  ;._ \\      -->
-<body>
+<body> 
 
     <div class="container">
-        <h1>Conversor de Banco de Dados (.dlens) para CSV</h1>
-        <input type="file" id="db-upload" accept=".dlens">
-        <button id="convert-btn" disabled>Converter para CSV</button>
-        <div id="status">Por favor, selecione um arquivo .dlens</div>
+    <h1>Database Converter (.dlens) to CSV</h1>
+    <input type="file" id="db-upload" accept=".dlens">
+    <button id="convert-btn" disabled>Convert to CSV</button>
+    <div id="status">Please select a .dlens file</div>
     </div>
+
+    <div id="donation-popup" class="popup-hidden">
+        <button id="close-popup-btn">&times;</button>
+        
+    <h3>Support this Project ❤️</h3>
+    <p>If this tool was helpful to you, consider making a small donation to help keep the project running.</p>
+        
+        <div class="progress-info">
+            <span>Goal</span>
+            <span id="progress-text">$100</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progress-bar-fill" style="width: 14%;"></div>
+        </div>
+        
+        <a href="https://www.paypal.com/donate" target="_blank" class="donate-button">
+            Make a Donation
+        </a>
+    </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
     <script src="script.js"></script>

@@ -1,3 +1,21 @@
+/* Configurações Globais */
+:root {
+    --background-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #bb86fc;
+    --primary-variant-color: #3700b3;
+    --text-color: #e1e1e1;
+    --text-secondary-color: #aaaaaa;
+    --border-color: #2c2c2c;
+    
+    /* Novas variáveis para o pop-up */
+    --bg-medium: #2a2a2a;
+    --bg-dark: #121212;
+    --text-medium: #bbbbbb;
+    --text-light: #f0f0f0;
+    --success-color: #03dac6;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     display: flex;
@@ -5,41 +23,187 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #f4f4f9;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
+
+/* Container Principal */
 .container {
     text-align: center;
-    background: white;
+    background: var(--surface-color);
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    width: 90%;
+    max-width: 500px;
 }
+
+/* Título */
 h1 {
-    color: #333;
-    margin-bottom: 20px;
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    font-weight: 500;
 }
+
+/* Botão de Upload de Arquivo */
 input[type="file"] {
-    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 25px auto;
+    color: var(--text-secondary-color);
 }
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #007bff;
+
+input[type="file"]::file-selector-button {
+    background-color: var(--primary-variant-color);
+    color: var(--text-color);
     border: none;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s ease-in-out;
 }
+
+input[type="file"]::file-selector-button:hover {
+    background-color: var(--primary-color);
+}
+
+/* Botão Principal */
+button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--primary-variant-color);
 }
+
+button:active {
+    transform: scale(0.98);
+}
+
 button:disabled {
-    background-color: #cccccc;
+    background-color: #404040;
+    color: #757575;
     cursor: not-allowed;
 }
+
+/* Texto de Status */
 #status {
-    margin-top: 20px;
+    margin-top: 25px;
     font-size: 14px;
-    color: #666;
+    color: var(--text-secondary-color);
+    height: 20px;
+}
+
+
+/* ===================================== */
+/* Styles for the Donation Pop-up        */
+/* ===================================== */
+
+#donation-popup {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-medium);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+    padding: 20px 30px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    transform: translateY(100%); /* Começa escondido */
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Estado visível do pop-up */
+#donation-popup.popup-visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#close-popup-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-medium);
+    font-size: 2.5em;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    width: auto; /* Sobrescreve o estilo do botão principal */
+}
+
+#donation-popup h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#donation-popup p {
+    font-size: 0.9em;
+    max-width: 600px;
+    margin: 0 auto 15px;
+    color: var(--text-secondary-color);
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+    margin: 0 auto 5px;
+    color: var(--text-medium);
+    max-width: 400px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    max-width: 400px;
+    height: 12px;
+    background-color: var(--bg-dark);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin: 0 auto 20px;
+    overflow: hidden;
+}
+
+#progress-bar-fill {
+    height: 100%;
+    background-color: var(--success-color);
+    border-radius: 8px;
+    transition: width 0.5s ease-in-out;
+}
+
+.donate-button {
+    display: inline-block;
+    width: auto;
+    padding: 10px 30px;
+    text-decoration: none;
+    margin: 0 auto;
+    font-size: 1.1em;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.donate-button:hover {
+    background-color: var(--success-color);
+    transform: translateY(-2px);
 }
