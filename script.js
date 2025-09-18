@@ -3,7 +3,7 @@ const convertBtn = document.getElementById('convert-btn');
 const statusElement = document.getElementById('status');
 let dbFile = null;
 
-// Enable the convert button when a file is selected
+// enable the convert button when a file is selected
 uploadElement.addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
         dbFile = e.target.files[0];
@@ -16,7 +16,7 @@ uploadElement.addEventListener('change', (e) => {
     }
 });
 
-// Ação principal ao clicar no botão
+// main action button
 convertBtn.addEventListener('click', async () => {
     if (!dbFile) {
         alert("No file selected!");
@@ -26,7 +26,7 @@ convertBtn.addEventListener('click', async () => {
     statusElement.textContent = 'Initializing database...';
 
     try {
-        // Configura o sql.js para encontrar o arquivo .wasm
+        // configure sql.js to find .wasm
         const SQL = await initSqlJs({
             locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}`
         });
@@ -36,10 +36,10 @@ convertBtn.addEventListener('click', async () => {
             statusElement.textContent = 'Reading file and running query...';
             const Uints = new Uint8Array(reader.result);
             
-            // Carrega o banco de dados
+            // load data
             const db = new SQL.Database(Uints);
 
-            // A sua query SQL
+            // query SQL
             const sqlQuery = `
                 SELECT DISTINCT
     cards._id AS 'Card ID',
@@ -64,7 +64,7 @@ JOIN
     lists ON cards.list = lists._id;
             `;
 
-            // Executa a query
+            // run query
             const results = db.exec(sqlQuery);
 
             if (results.length === 0) {
@@ -73,11 +73,11 @@ JOIN
             }
             
             statusElement.textContent = 'Converting to CSV...';
-            // Convert the results to CSV format
+            // convert the results to CSV format
             const csvContent = convertToCSV(results[0]);
 
             statusElement.textContent = 'Creating file for download...';
-            // Start the CSV file download
+            // start the CSV file download
             downloadCSV(csvContent, 'query_result.csv');
 
             statusElement.textContent = 'Conversion complete! Download should have started.';
@@ -95,9 +95,8 @@ JOIN
     }
 });
 
-/**
- * Convert an sql.js result object to a CSV string.
- */
+
+// convert an sql.js result object to a CSV string
 function convertToCSV(data) {
     const columns = data.columns;
     const rows = data.values;
@@ -118,9 +117,7 @@ function convertToCSV(data) {
     return csv;
 }
 
-/**
- * Create a download link and click it programmatically.
- */
+// Create a download link and click it programmatically
 function downloadCSV(csvContent, fileName) {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
@@ -135,11 +132,8 @@ function downloadCSV(csvContent, fileName) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
 
-    // --- FILE CONVERTER LOGIC (PLACE YOURS HERE) ---
-    // Example:
     const uploadElement = document.getElementById('db-upload');
     const convertBtn = document.getElementById('convert-btn');
-    // ... rest of your conversion logic
 
     uploadElement.addEventListener('change', (e) => {
         if (e.target.files.length > 0) {
@@ -149,31 +143,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    // --- DONATION POPUP LOGIC ---
+    // donate shit
 
     const donationPopup = document.getElementById('donation-popup');
     const closePopupButton = document.getElementById('close-popup-btn');
 
-    // Function to show the popup
+    // show the popup
     const showPopup = () => {
         donationPopup.classList.remove('popup-hidden');
         donationPopup.classList.add('popup-visible');
     };
 
-    // Function to hide the popup
+    // hide the popup
     const hidePopup = () => {
         donationPopup.classList.remove('popup-visible');
         donationPopup.classList.add('popup-hidden');
     };
 
-    // Show the popup after 1,5 seconds
+    // popup after 1,5 seconds
     setTimeout(showPopup, 1500);
 
-    // Add click event to close the popup
+    // click event to close the popup
     closePopupButton.addEventListener('click', hidePopup);
 });
 
-// How-to modal wiring
+// how-to modal wiring
 document.addEventListener('DOMContentLoaded', () => {
     const howToBtn = document.getElementById('howto-btn');
     const howToModal = document.getElementById('howto-modal');
@@ -206,9 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/* ======================
-   Animated Galaxy Canvas
-   ====================== */
+// animated galaxy canvas
 (function() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas) return;
