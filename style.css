@@ -221,3 +221,37 @@ button:disabled {
     background-color: var(--success-color);
     transform: translateY(-2px);
 }
+
+/* How-to modal styles */
+.modal-hidden { display: none; }
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1001;
+}
+.modal-card {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--surface-color);
+    color: var(--text-color);
+    padding: 20px 24px;
+    max-width: 640px;
+    width: calc(100% - 48px);
+    border-radius: 10px;
+    z-index: 1002;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.modal-card h2 { margin-top: 0; }
+.modal-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-secondary-color);
+    font-size: 1.6em;
+    cursor: pointer;
+}

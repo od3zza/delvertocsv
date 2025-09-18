@@ -161,6 +161,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
     closePopupButton.addEventListener('click', hidePopup);
 });
 
+// How-to modal wiring
+document.addEventListener('DOMContentLoaded', () => {
+    const howToBtn = document.getElementById('howto-btn');
+    const howToModal = document.getElementById('howto-modal');
+    const howToClose = document.getElementById('howto-close');
+
+    if (!howToBtn || !howToModal) return;
+
+    const openModal = () => {
+        howToModal.classList.remove('modal-hidden');
+        howToModal.setAttribute('aria-hidden', 'false');
+    };
+    const closeModal = () => {
+        howToModal.classList.add('modal-hidden');
+        howToModal.setAttribute('aria-hidden', 'true');
+    };
+
+    howToBtn.addEventListener('click', openModal);
+    howToClose && howToClose.addEventListener('click', closeModal);
+
+    // clicking backdrop closes the modal
+    howToModal.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-backdrop')) closeModal();
+    });
+
+    // ESC to close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && howToModal && !howToModal.classList.contains('modal-hidden')) {
+            closeModal();
+        }
+    });
+});
+
 /* ======================
    Animated Galaxy Canvas
    ====================== */
