@@ -60,6 +60,11 @@ h1 {
     font-weight: 500;
 }
 
+a {
+    color: #e1e1e1;
+    text-decoration: underline;
+}
+
 /* upload button */
 input[type="file"] {
     display: block;
