@@ -1,4 +1,4 @@
-/* Configurações Globais */
+/* global */
 :root {
     --background-color: #121212;
     --surface-color: #1e1e1e;
@@ -7,8 +7,7 @@
     --text-color: #e1e1e1;
     --text-secondary-color: #aaaaaa;
     --border-color: #2c2c2c;
-    
-    /* Novas variáveis para o pop-up */
+
     --bg-medium: #2a2a2a;
     --bg-dark: #121212;
     --text-medium: #bbbbbb;
@@ -27,7 +26,7 @@ body {
     color: var(--text-color);
 }
 
-/* Background canvas for animated galaxy */
+/* background canvas for animated galaxy */
 #bg-canvas {
     position: fixed;
     top: 0;
@@ -35,11 +34,11 @@ body {
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    pointer-events: none; /* allow clicks through */
+    pointer-events: none;  
     background: radial-gradient(ellipse at center, rgba(10,10,30,0.6), rgba(0,0,0,0.9));
 }
 
-/* Container Principal */
+/* container main */
 .container {
     text-align: center;
     background: var(--surface-color);
@@ -53,7 +52,6 @@ body {
     z-index: 1; /* sit above background canvas */
 }
 
-/* Título */
 h1 {
     color: var(--text-color);
     margin-top: 0;
@@ -62,7 +60,7 @@ h1 {
     font-weight: 500;
 }
 
-/* Botão de Upload de Arquivo */
+/* upload button */
 input[type="file"] {
     display: block;
     margin: 0 auto 25px auto;
@@ -83,7 +81,7 @@ input[type="file"]::file-selector-button:hover {
     background-color: var(--primary-color);
 }
 
-/* Secondary button style (used by How-to button) - match file selector button */
+/* secondary button style (used by How-to button) - match file selector button */
 .secondary {
     background-color: var(--primary-variant-color);
     color: var(--text-color);
@@ -98,7 +96,7 @@ input[type="file"]::file-selector-button:hover {
     background-color: var(--primary-color);
 }
 
-/* Botão Principal */
+/* main button */
 button {
     width: 100%;
     padding: 12px 20px;
@@ -125,7 +123,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Texto de Status */
+/* status */
 #status {
     margin-top: 25px;
     font-size: 14px;
@@ -134,10 +132,7 @@ button:disabled {
 }
 
 
-/* ===================================== */
-/* Styles for the Donation Pop-up        */
-/* ===================================== */
-
+/* donate shit style */
 #donation-popup {
     position: fixed;
     bottom: 0;
@@ -152,12 +147,12 @@ button:disabled {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    transform: translateY(100%); /* Começa escondido */
+    transform: translateY(100%); 
     opacity: 0;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-/* Estado visível do pop-up */
+/* visible pop-up */
 #donation-popup.popup-visible {
     transform: translateY(0);
     opacity: 1;
@@ -174,7 +169,7 @@ button:disabled {
     line-height: 1;
     padding: 0;
     cursor: pointer;
-    width: auto; /* Sobrescreve o estilo do botão principal */
+    width: auto;  
 }
 
 #donation-popup h3 {
@@ -237,7 +232,7 @@ button:disabled {
     transform: translateY(-2px);
 }
 
-/* How-to modal styles */
+/* how-to modal styles */
 #howto-modal.modal-hidden { display: none; }
 #howto-modal { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; }
 .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
@@ -246,7 +241,7 @@ button:disabled {
 .modal-card h2 { margin-top: 0; }
 .modal-card ol { text-align: left; margin-left: 1.1em; }
 
-/* How-to modal styles */
+/* how-to modal styles */
 .modal-hidden { display: none; }
 .modal-backdrop {
     position: fixed;
