@@ -41,15 +41,27 @@ convertBtn.addEventListener('click', async () => {
 
             // A sua query SQL
             const sqlQuery = `
-                SELECT  DISTINCT 
-                        quantity AS 'Count',
-                        quantity AS 'Tradelist Count',
-                        data_names.name AS 'Name',
-                        data_editions.tl_abb AS 'Edition'
-                  FROM cards, data_cards, data_names, data_editions
-                  WHERE cards.card == data_cards._id
-                  AND data_cards.name = data_names._id
-                  AND data_cards.edition = data_editions._id;
+                SELECT DISTINCT
+    cards._id AS 'Card ID',
+    cards.quantity AS 'amount',
+    data_names.name AS 'card_name',
+    data_editions.tl_abb AS 'set_code',
+    COALESCE(NULLIF(cards.language, ''), 'EN') AS 'language',
+    COALESCE(NULLIF(cards.condition, ''), 'NM') AS 'condition',
+    CASE cards.foil WHEN 0 THEN '' ELSE '1' END AS 'is_foil',
+    data_cards.number AS 'collector_number',
+    strftime('%Y-%m-%d', cards.creation / 1000, 'unixepoch') AS 'added',
+    lists.name AS 'Collection'
+FROM
+    cards
+JOIN
+    data_cards ON cards.card = data_cards._id
+JOIN
+    data_names ON data_cards.name = data_names._id
+JOIN
+    data_editions ON data_cards.edition = data_editions._id
+JOIN
+    lists ON cards.list = lists._id;
             `;
 
             // Executa a query
