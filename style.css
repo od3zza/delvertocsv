@@ -27,6 +27,18 @@ body {
     color: var(--text-color);
 }
 
+/* Background canvas for animated galaxy */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none; /* allow clicks through */
+    background: radial-gradient(ellipse at center, rgba(10,10,30,0.6), rgba(0,0,0,0.9));
+}
+
 /* Container Principal */
 .container {
     text-align: center;
@@ -37,6 +49,8 @@ body {
     border: 1px solid var(--border-color);
     width: 90%;
     max-width: 500px;
+    position: relative;
+    z-index: 1; /* sit above background canvas */
 }
 
 /* Título */

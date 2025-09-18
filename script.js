@@ -160,3 +160,89 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Add click event to close the popup
     closePopupButton.addEventListener('click', hidePopup);
 });
+
+/* ======================
+   Animated Galaxy Canvas
+   ====================== */
+(function() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+    let stars = [];
+    const starCount = Math.round(Math.min(window.innerWidth, 1200) / 2);
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    function createStars() {
+        stars = [];
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                z: rand(0.2, 1),
+                r: rand(0.3, 1.6),
+                speed: rand(0.02, 0.5)
+            });
+        }
+    }
+
+    function drawNebula() {
+        // soft radial gradients layered for a nebula-like feel
+        const g = ctx.createLinearGradient(0, 0, width, height);
+        g.addColorStop(0, 'rgba(50,10,60,0.06)');
+        g.addColorStop(0.4, 'rgba(60,20,100,0.06)');
+        g.addColorStop(1, 'rgba(10,10,30,0.08)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, width, height);
+    }
+
+    function render(t) {
+        if (prefersReduced) return; // avoid heavy animation
+
+        ctx.clearRect(0, 0, width, height);
+
+        // slow-moving nebula overlay
+        drawNebula();
+
+        // stars
+        for (let i = 0; i < stars.length; i++) {
+            const s = stars[i];
+            // twinkle
+            const alpha = 0.6 + 0.4 * Math.sin((t * 0.001 * s.speed) + i);
+            ctx.fillStyle = `rgba(255,255,255,${alpha * s.z})`;
+            const size = s.r * s.z * 1.6;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, size, 0, Math.PI * 2);
+            ctx.fill();
+
+            // parallax drift
+            s.x += (s.speed * 0.15);
+            s.y += Math.sin((s.x + t * 0.0001) * 0.002) * 0.2;
+
+            if (s.x > width + 10) s.x = -10;
+            if (s.y > height + 10) s.y = -10;
+            if (s.y < -10) s.y = height + 10;
+        }
+
+        requestAnimationFrame(render);
+    }
+
+    // init
+    resize();
+    createStars();
+    if (!prefersReduced) requestAnimationFrame(render);
+
+    window.addEventListener('resize', () => {
+        resize();
+        createStars();
+    });
+})();
