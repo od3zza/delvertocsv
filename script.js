@@ -166,8 +166,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         donationPopup.classList.add('popup-hidden');
     };
 
-    // Show the popup after 3 seconds
-    setTimeout(showPopup, 3000);
+    // Show the popup after 1,5 seconds
+    setTimeout(showPopup, 1500);
 
     // Add click event to close the popup
     closePopupButton.addEventListener('click', hidePopup);
